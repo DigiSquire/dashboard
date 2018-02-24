@@ -1,0 +1,37 @@
+.dropzone { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; 
+    font-weight: 200;
+    height: 300px;
+    border-radius: 5px;
+    background: white;
+    margin: 10px 0;
+
+    &.hovering {
+        border: 2px solid #f16624;
+        color: #dadada !important;
+    }
+
+    .file-label {
+        font-size: 1.2em;
+    }
+}
+
+progress::-webkit-progress-value {
+    transition: width 0.1s ease;
+}
+.undo {
+ cursor: pointer;
+ font-weight: inherit;
+ float:right;
+ line-height: 1.2em;
+}
+span.undo:hover{
+transform: scale(1.2);
+}
+.ti-back-right:before {
+    color: #DD0330;
+    font-weight: 700;
+}

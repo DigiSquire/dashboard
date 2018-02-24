@@ -2465,11 +2465,7 @@ Copyright (c) 2015 Daniel Eden
 .ct-series-a .ct-point, .ct-series-a .ct-line, .ct-series-a .ct-bar, .ct-series-a .ct-slice-donut {
   stroke: #68B3C8;
 }
-.ct-chart-bar .ct-series .ct-bar.ct-threshold-above  {
-  stroke: #4ECDC4;
-  stroke-width: 10px;
-  stroke-linecap: round;
-}
+
 .ct-series-a .ct-slice-pie, .ct-series-a .ct-area {
   fill: #68B3C8;
 }
@@ -2501,7 +2497,14 @@ Copyright (c) 2015 Daniel Eden
 .ct-series-e .ct-slice-pie, .ct-series-e .ct-area {
   fill: #7A9E9F;
 }
-
+.ct-threshold-above{
+  border-radius: 50%;
+}
+.ct-chart-bar .ct-bar.ct-threshold-above  {
+  stroke: #4ECDC4;
+  stroke-width: 10px;
+  stroke-linecap: round;
+}
 .ct-series-f .ct-point, .ct-series-f .ct-line, .ct-series-f .ct-bar, .ct-series-f .ct-slice-donut {
   stroke: rgba(104, 179, 200, 0.8);
 }

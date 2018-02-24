@@ -51,6 +51,9 @@
                 </div>
             </div> -->
             <div class="col-lg-3 col-sm-6">
+                <!-- placeholder -->
+            </div>
+            <div class="col-lg-3 col-sm-6">
                 <div class="card">
                     <div class="content">
                         <div class="row">
@@ -130,10 +133,26 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Risk Matrix</h4>
+                        <h4 class="title">Risk Matrix<span (click)="undoUpdate()" class="ti-back-right undo">undo-update</span></h4>
+                        
+                        <!-- <span class="icon-name"> undo-update</span> -->
                     <!--    <p class="category">Last Campaign Performance</p>-->
                     </div>
-                    <div class="content">
+                    <!-- <div class="dropzone" dropZone (hovered)="toggleHover($event)" (dropped)="startUpload($event)" [class.hovering]="isHovering"> <h3>Chat Update Drop Zone</h3>
+                    <p>Drag and Drop a File</p>
+                    <div class="file">
+                        <label class="file-label"> <input type="file" (change)="changeListener($event)" #input />
+                            <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fa fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                    or choose a file…
+                                </span>
+                            </span>
+                        </label>
+                    </div></div> -->
+                    <div class="content dropzone" dropZone (hovered)="toggleHover($event)" (dropped)="startUpload($event)" [class.hovering]="isHovering">
                         <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
 
                         <div class="footer">
