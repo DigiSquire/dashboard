@@ -23,6 +23,7 @@ import { MapsComponent } from './maps/maps.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { UpgradeComponent } from './upgrade/upgrade.component';
 import { DropZoneDirective } from './drop-zone.directive';
+import { CsvParserService } from './csv-parser.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +49,7 @@ import { DropZoneDirective } from './drop-zone.directive';
     NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=YOUR_KEY_HERE'})
 
   ],
-  providers: [],
+  providers: [CsvParserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

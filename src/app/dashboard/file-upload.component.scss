@@ -23,10 +23,12 @@ progress::-webkit-progress-value {
     transition: width 0.1s ease;
 }
 .undo {
- cursor: pointer;
  font-weight: inherit;
  float:right;
  line-height: 1.2em;
+}
+button[disabled] {
+    cursor: not-allowed;
 }
 span.undo:hover{
 transform: scale(1.2);

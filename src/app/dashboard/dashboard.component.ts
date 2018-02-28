@@ -6,6 +6,7 @@ import * as Papa from 'papaparse/papaparse.min.js';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { CsvParserService } from '.././csv-parser.service';
 
 declare var $: any;
 interface Post {
@@ -22,71 +23,47 @@ interface Post {
 })
 
 export class DashboardComponent implements OnInit{
-  postsCol: AngularFirestoreCollection<Post>;
-  posts: Observable<Post[]>;
-  config: {};
-  serverData: any;
+    postsCol: AngularFirestoreCollection<Post>;
+    posts: Observable<Post[]>;
+
+    barChartVertical: any;
+    barChartHor: any;
+    serverDataVert: any;
+    serverDataHor;
     barOptions: any;
     // State for dropzone CSS toggling
     isHovering: boolean;
-    constructor(private afs: AngularFirestore) {
+    isGrayed: boolean;
+    constructor(private afs: AngularFirestore, public dataService: CsvParserService) {
     }
     toggleHover(event: boolean) {
         this.isHovering = event;
     }
-
-    changeListener($event): void {
-        this.readThis($event.target);
-    }
-    dropListener($event): void {
-        $event.preventDefault();
-        this.readThis($event.dataTransfer);
-    }
     startUpload(event: FileList) {
         // The File object
-        const file = event.item(0);        
-        // Client-side validation example
-        if (file.type.split('/')[0] !== 'vnd.ms-excel') {
-            alert('unsupported file type :( , please upload a .csv file');
+        const file = event.item(0);
+        if (file.type.split('/')[1] !== 'vnd.ms-excel') {
+            this.dataService.showNotification('top', 'right', this.dataService.updtMessages[2],
+            this.dataService.colors[3], 'ti-face-sad');
             return;
         }else {
-            Papa.parse(file, this.config);
+            this.isGrayed = false;
+            // Papa.parse(file, this.config);
+            this.dataService.parse(file, this.barChartVertical, this.barChartHor);
+            // this.dataService.findTopTen();
+            this.dataService.showNotification('top', 'right', this.dataService.updtMessages[0],
+             this.dataService.colors[1], 'ti-face-smile');
         }
     }
-    readThis(inputValue: any): void {
-        if (inputValue.files[0].type.split('/')[0] !== 'vnd.ms-excel') {
-            alert('unsupported file type :( , please upload a .csv file');
-            return;
-        }else{
-            Papa.parse(inputValue.files[0], this.config);
-        }
-        
+    undoUpdate() {
+        this.isGrayed = true;
+        this.dataService.undoUpdate(this.barChartVertical, this.serverDataVert);
+        this.dataService.undoUpdate(this.barChartHor, this.serverDataHor);
+        this.dataService.showNotification('top', 'right', this.dataService.updtMessages[1], this.dataService.colors[0],
+        'ti-face-smile');
     }
-    
-    ngOnInit(){
-        this.config = {
-            delimiter: "",	// auto-detect
-                newline: "",	// auto-detect
-                    quoteChar: '"',
-                        header: true,
-                            complete: function (results) {
-                                     console.log(results.data);
-                                this.ids = results.data;
-                                var data = {
-                                    //set our labels (x-axis) to the Label values from the JSON data
-                                    labels: this.ids.map(function (id) {
-                                        return id.Label;
-                                    }),
-                                    //set our values to Value value from the JSON data
-                                    series: this.ids.map(function (id) {
-                                        return id.Value;
-                                    })
-                                };
-                                console.log(data);
-                                new Chartist.Bar('#chartPreferences', data, optionsPreferences);
-                                    },
-                                skipEmptyLines: true
-        };
+    ngOnInit() {
+        this.isGrayed = true;
     //   this.postsCol = this.afs.collection('stats');
     //  this.posts = this.postsCol.valueChanges();
       //  var dataSales = {
@@ -165,15 +142,15 @@ export class DashboardComponent implements OnInit{
                     });
 
         var data = {
-          labels: ['App1', 'App2', 'App3', 'App4'],
+            labels: ['App1', 'App2', 'App3', 'App4', 'App5'],
           series: [
-            [4,1.2,2,17]
+            [4,1.2,2,17,12]
           ]
         };
 
         var options = {
           seriesBarDistance: 10,
-          reverseData: true,
+          reverseData: false,
           horizontalBars: true,
           axisY: {
             offset: 70
@@ -201,7 +178,9 @@ export class DashboardComponent implements OnInit{
               })
           ]
         };
-        new Chartist.Bar('#chartActivity', data, options);
+        this.serverDataHor = Object.assign({}, data);
+        console.log(this.serverDataHor);
+        this.barChartHor = new Chartist.Bar('#chartActivity', data, options);
         // Bar chart verical
         var dataPreferences = {
 
@@ -219,7 +198,7 @@ export class DashboardComponent implements OnInit{
                       belowThreshold: 'ct-threshold-below'
                   }
             }
-          ), 
+          ),
               ctAxisTitle({
                   axisX: {
                       axisTitle: 'Risk Categories',
@@ -244,12 +223,8 @@ export class DashboardComponent implements OnInit{
           ]
 
         };
-        this.serverData = Object.assign({}, dataPreferences);
-        this.barOptions = Object.assign({}, optionsPreferences);
-        console.log(this.serverData);
-        new Chartist.Bar('#chartPreferences', dataPreferences, optionsPreferences);
-    }
-    undoUpdate(): void {
-        new Chartist.Bar('#chartPreferences', this.serverData, this.barOptions);
+        this.serverDataVert = Object.assign({}, dataPreferences);
+        console.log(this.serverDataVert);
+        this.barChartVertical = new Chartist.Bar('#chartPreferences', dataPreferences, optionsPreferences);
     }
 }

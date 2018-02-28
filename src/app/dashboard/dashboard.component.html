@@ -133,7 +133,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Risk Matrix<span (click)="undoUpdate()" class="ti-back-right undo">undo-update</span></h4>
+                        <h4 class="title">Risk Matrix<button (click)="undoUpdate()" [disabled]="isGrayed" class="button ti-back-right undo"></button></h4>
                         
                         <!-- <span class="icon-name"> undo-update</span> -->
                     <!--    <p class="category">Last Campaign Performance</p>-->
