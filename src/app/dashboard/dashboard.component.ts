@@ -42,18 +42,18 @@ export class DashboardComponent implements OnInit{
     startUpload(event: FileList) {
         // The File object
         const file = event.item(0);
-        if (file.type.split('/')[1] !== 'vnd.ms-excel') {
-            this.dataService.showNotification('top', 'right', this.dataService.updtMessages[2],
-            this.dataService.colors[3], 'ti-face-sad');
-            return;
-        }else {
-            this.isGrayed = false;
+        // if (file.type.split('/')[1] !== 'vnd.ms-excel') {
+        //     this.dataService.showNotification('top', 'right', this.dataService.updtMessages[2],
+        //     this.dataService.colors[3], 'ti-face-sad');
+        //     return;
+        // }else {
+           
             // Papa.parse(file, this.config);
             this.dataService.parse(file, this.barChartVertical, this.barChartHor);
             // this.dataService.findTopTen();
             this.dataService.showNotification('top', 'right', this.dataService.updtMessages[0],
-             this.dataService.colors[1], 'ti-face-smile');
-        }
+            this.dataService.colors[1], 'ti-face-smile'); this.isGrayed = false;
+        // }
     }
     undoUpdate() {
         this.isGrayed = true;
