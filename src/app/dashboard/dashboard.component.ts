@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit{
     undoUpdate() {
         this.isGrayed = true;
         this.dataService.undoUpdate(this.barChartVertical, this.serverDataVert);
-        this.dataService.undoUpdate(this.barChartHor, this.serverDataHor);
+        // this.dataService.undoUpdate(this.barChartHor, this.serverDataHor);
         this.dataService.showNotification('top', 'right', this.dataService.updtMessages[1], this.dataService.colors[0],
         'ti-face-smile');
     }
